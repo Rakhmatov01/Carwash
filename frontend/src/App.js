@@ -1,7 +1,6 @@
+import "./App.css";
+import AppRouter from "./routes/AppRouter";
+
 export default function App(){
-  const baseUrl = process.env.REACT_APP_API_URL;
-  console.log(baseUrl);
-  return (<div>
-    Hello Carwash!
-  </div>)
+  return (<AppRouter />)
 }

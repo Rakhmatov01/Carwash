@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {persist} from "zustand/middleware";
 
-export const useAuthjStore = create(persist((set)=>({
+export const useAuthStore = create(persist((set)=>({
     accessToken:null,
     refreshToken : null,
     user : null,
