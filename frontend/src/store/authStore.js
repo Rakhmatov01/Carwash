@@ -9,4 +9,9 @@ export const useAuthStore = create(persist((set)=>({
     setUser : (user)=>set({user}),
     logout : ()=>set({accessToken:null, refreshToken:null, user:null}),
 
-}), {name : "authTokens"}));
+}), {name : "authTokens",
+    partialize : (state)=>({
+        accessToken:state.accessToken,
+        refreshToken:state.refreshToken,
+    })
+}));

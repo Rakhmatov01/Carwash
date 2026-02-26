@@ -1,4 +1,5 @@
-import { BrowserRouter , Routes, Route , Navigate } from "react-router-dom";
+// routes/AppRouter.jsx
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "../pages/public/HomePage";
 import CarwashDetailPage from "../pages/public/CarwashDetailPage";
@@ -7,30 +8,43 @@ import RegisterPage from "../pages/auth/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
 import PartnerDashboardPage from "../pages/partner/PartnerDashboardPage";
+import UserProfilePage from "../pages/user/UserProfilePage";
+import PartnerCarwashEditPage from "../pages/partner/PartnerCarwashEditPage";
+import PrivateLayout from "../components/layout/PrivateLayout";
 
-export default function AppRouter(){
-    return (
-        <BrowserRouter future={{
-    v7_startTransition: true,
-  }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/carwash/:id" element={<CarwashDetailPage />} />
+export default function AppRouter() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/carwash/:id" element={<CarwashDetailPage />} />
+      <Route element={<PrivateLayout />}>
+      <Route path="/profile" element={<UserProfilePage />} />
+      <Route
+        path="/partner"
+        element={
+          <ProtectedRoute>
+            <RoleRoute role="partner">
+              <PartnerDashboardPage />
+            </RoleRoute>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/carwashEdit"
+        element={
+          <ProtectedRoute>
+            <RoleRoute role="partner">
+              <PartnerCarwashEditPage />
+            </RoleRoute>
+          </ProtectedRoute>
+        }
+      /></Route>
 
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      
 
-            <Route path="/partner" element={
-                <ProtectedRoute>
-                    <RoleRoute role="partner">
-                        <PartnerDashboardPage/>
-                    </RoleRoute>
-                </ProtectedRoute>
-            } />
-            <Route path="*" element={<Navigate to="/"replace/>} />
-
-
-          </Routes>
-        </BrowserRouter>
-    )
+      <Route path="*" element={<Navigate to="/register" replace />} />
+    </Routes>
+  );
 }

@@ -1,5 +1,5 @@
+import Navbar from "../../components/Navbar"
 export default function CarwashDetailPage(){
-    return (<div>
-        This is CarwashDetailPage
-    </div>)
+    return(<Navbar />)
+    
 }
