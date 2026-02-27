@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { meApi } from "../../api/auth";
 import { useAuthStore } from "../../store/authStore";
 import toast from "react-hot-toast";
 
 
 export default function PrivateLayout() {
+    const navigate = useNavigate();
     const logout = useAuthStore((s)=>s.logout);
     const setUser = useAuthStore((s)=>s.setUser);
     const accessToken = useAuthStore((s)=>s.accessToken);
@@ -18,6 +19,7 @@ export default function PrivateLayout() {
             }catch(err){
                 toast.error(err.message);
                 logout();
+                navigate("/");
             }
 
         }
