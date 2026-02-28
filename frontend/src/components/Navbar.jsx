@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 export default function Navbar(){
     const {pathname} = useLocation();
-    console.log(pathname);
     const accessToken = useAuthStore((s)=>s.accessToken);
     const navigate = useNavigate();
     return (<div className= " bg-white w-full flex items-center justify-between shadow-md px-5 py-3 ">
