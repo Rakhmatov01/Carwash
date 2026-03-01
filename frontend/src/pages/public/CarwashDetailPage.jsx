@@ -3,7 +3,9 @@ import Navbar from "../../components/Navbar"
 import { useEffect, useState } from "react";
 import { addCommentApi, getCarwashApi, getCommentApi } from "../../api/carwash";
 import toast from "react-hot-toast";
+import { useAuthStore } from "../../store/authStore";
 export default function CarwashDetailPage(){
+    const user = useAuthStore(s=>s.user);
     const [carwash , setCarwash] = useState(null);
     const [comments , setComments] = useState(null);
     const [usersComment, setUsersComment] =useState("");
@@ -11,6 +13,10 @@ export default function CarwashDetailPage(){
 
     async function handleSubmit(e){
         e.preventDefault();
+        if(!user){
+          toast.error("You need to login first to comment!");
+          return;
+        }
         const res = await addCommentApi(id, usersComment);
         const resget = await getCommentApi(id);
         setComments(resget.data);
