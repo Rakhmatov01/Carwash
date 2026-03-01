@@ -4,12 +4,9 @@ import Navbar from "../../components/Navbar";
 import { getCarwashesApi, rateCarwashApi } from "../../api/carwash";
 import toast from "react-hot-toast";
 import {Search} from "lucide-react";
-import RatingPopup from "../../components/carwash/RatingPopup";
-import { useUiStore } from "../../store/uiStore";
 
 export default function HomePage(){
     const [carwashList, setCarwashList] = useState([]);
-    const carwashId = useUiStore(s=>s.ratingPopup.carwashId);
     const loadCarwashList = React.useCallback( async () =>{
         try{
         const res = await getCarwashesApi();
@@ -21,16 +18,7 @@ export default function HomePage(){
     useEffect(()=>{
         loadCarwashList();
     },[loadCarwashList]);
-    async function onSubmitRating(rating){
-        try{
-        const res = await rateCarwashApi(carwashId, rating);
-        if(res.ok) toast.success("Rated successfully");
-        useUiStore.getState().closeRatingPopup();
-        await loadCarwashList();}
-        catch{
-            toast.error("Rating failed");
-        }
-    }
+
     return (<div>
         <Navbar />
         <div className="p-8 md:p-16 md:pt-8">
@@ -40,11 +28,6 @@ export default function HomePage(){
                 <input className="bg-transparent flex-1 focus:outline-none" type="text" placeholder="Manzil bo'yicha qidirish"/>
             </div>
             <CarwashList data={carwashList}/>
-            <RatingPopup
-                            open={useUiStore((s) => s.ratingPopup.open)}
-                            onClose={() => useUiStore.getState().closeRatingPopup()}
-                            onSubmit={onSubmitRating}
-                        />
         </div>
         </div>)
 }

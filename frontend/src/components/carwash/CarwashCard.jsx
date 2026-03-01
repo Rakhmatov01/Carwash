@@ -7,12 +7,12 @@ import toast from "react-hot-toast";
 
 
 export default function CarwashCard({data}){
-    const user = useAuthStore(s=>s.user);
+    const token = useAuthStore(s=>s.accessToken);
     const openPopup = useUiStore(s=>s.openRatingPopup);
     const navigate = useNavigate();
     function onOpenPopup(e){
         e.stopPropagation();
-        if(!user){
+        if(!token){
             toast.error("You need to login first to give rating!");
             return;
         }

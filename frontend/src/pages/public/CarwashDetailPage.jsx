@@ -4,16 +4,28 @@ import { useEffect, useState } from "react";
 import { addCommentApi, getCarwashApi, getCommentApi } from "../../api/carwash";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/authStore";
+import RatingBadge from "../../components/carwash/RatingBadge";
+import ReadRating from "../../components/carwash/BasicRating";
+import { useUiStore } from "../../store/uiStore";
 export default function CarwashDetailPage(){
-    const user = useAuthStore(s=>s.user);
+    const token = useAuthStore(s=>s.accessToken);
     const [carwash , setCarwash] = useState(null);
+    const openPopup = useUiStore(s=>s.openRatingPopup);
     const [comments , setComments] = useState(null);
     const [usersComment, setUsersComment] =useState("");
     const {id} = useParams();
 
+    function onOpenPopup(){
+        if(!token){
+            toast.error("You need to login first to give rating!");
+            return;
+        }
+         openPopup(id)
+    }
+
     async function handleSubmit(e){
         e.preventDefault();
-        if(!user){
+        if(!token){
           toast.error("You need to login first to comment!");
           return;
         }
@@ -49,9 +61,17 @@ export default function CarwashDetailPage(){
         {/* LEFT: page bilan birga scroll bo‘ladi */}
         <main className="flex-1 my-6 bg-white rounded-xl shadow-md">
           <img src={carwash?.image} alt={carwash?.name} className="w-full h-[320px] object-cover rounded-t-xl"/>
-          <div className="p-5" >
+          <div className="p-5 flex justify-between" >
+            <div>
+            <div className="flex gap-3 mb-2">
         <h1 className="text-2xl font-bold mb-2">{carwash?.name}</h1>
+        <RatingBadge value={carwash?.rating_avg} carwashId={id} />
+        </div>
         <h3 className="text-gray-600 text-xl mb-2">{carwash?.address}</h3>
+        </div>
+        <div className="mt-3 hover:cursor-pointer" onClick={onOpenPopup}>
+          <ReadRating />
+        </div>
     </div>
         </main>
 

@@ -11,12 +11,15 @@ import PartnerDashboardPage from "../pages/partner/PartnerDashboardPage";
 import UserProfilePage from "../pages/user/UserProfilePage";
 import PartnerCarwashEditPage from "../pages/partner/PartnerCarwashEditPage";
 import PrivateLayout from "../components/layout/PrivateLayout";
+import PublicLayout from "../components/layout/PublicLayout";
 
 export default function AppRouter() {
   return (
     <Routes>
+      <Route element={<PublicLayout />}>
       <Route path="/" element={<HomePage />} />
       <Route path="/carwash/:id" element={<CarwashDetailPage />} />
+      </Route>
       <Route element={<PrivateLayout />}>
       <Route path="/profile" element={<UserProfilePage />} />
       <Route
