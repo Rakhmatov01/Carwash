@@ -12,11 +12,6 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function RatingPopup({ open, onClose, onSubmit }) {
   const [value, setValue] = React.useState(null);
-  
-  // debugging: see when the dialog component renders and what `open` prop is
-  React.useEffect(() => {
-    console.log("RatingPopup render, open=", open);
-  }, [open]);
 
   // When the dialog mounts/opened due to a click, that same click can
   // sometimes register as a backdrop click on the newly-mounted backdrop
