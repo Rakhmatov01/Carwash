@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "accounts",
     "carwash",
+
+    'drf_spectacular',
 ]
 
 
@@ -45,7 +47,9 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.AllowAny",
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
 }
 
 
@@ -94,3 +98,21 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.User"
+
+# to configure swagger
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'API documentation for your project',
+    'VERSION': '1.0.0',
+    # 'SECURITY': [{'BearerAuth': []}], # Example for JWT
+    # 'COMPONENTS': {
+    #     'securitySchemes': {
+    #         'BearerAuth': {
+    #             'type': 'http',
+    #             'scheme': 'bearer',
+    #             'bearerFormat': 'JWT',
+    #         }
+    #     }
+    # },
+}
